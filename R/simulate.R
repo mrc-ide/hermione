@@ -28,6 +28,7 @@
 ##' @author Sangeeta Bhatia
 ##' @importFrom epitrix gamma_mucv2shapescale
 ##' @export
+##'
 simulate_si <- function(mean_ip,
                         sd_ip,
                         mean_inf,
@@ -46,24 +47,25 @@ simulate_si <- function(mean_ip,
     mu = mean_inf, cv = sd_inf / mean_inf
   )
 
-  t_1 <- rgamma(
+  t_1 <- stats::rgamma(
     n = nsim, shape = params_inf$shape, rate = 1 / params_inf$scale
   )
 
   ## We shifted the mean of the distribution to the right
   ## And then shift back the samples by amount offset.
   t_1 <- t_1 - offset
-  t_2 <- rgamma(
+  t_2 <- stats::rgamma(
     n = nsim, shape = params_ip$shape, rate = 1 / params_ip$scale
   )
 
   out <- data.frame(t_1 = t_1, t_2 = t_2, si = round(t_1 + t_2))
 
   if (!is.null(mean_iso)) {
+
     params_iso <- epitrix::gamma_mucv2shapescale(
       mu = mean_iso, cv = sd_iso / mean_iso
     )
-    out$nu <- rgamma(
+    out$nu <- stats::rgamma(
       n = nsim, shape = params_iso$shape, rate = 1 / params_iso$scale
     )
     out$nu <- round(out$nu)

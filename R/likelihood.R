@@ -1,11 +1,11 @@
 ## Probability of observing a given serial interval taking into
 ## account isolation of primary case.
 ##' @title Probability of serial interval when primary case has been
-##' isolated
+##' isolated and in the presence of asymptomatic infectiousness
 ##' @param t observed serial interval
 ##' @param nu  onset to isolation of primary case
 ##' @param offset days of asymptomatic infectiousness
-##'
+##' @inheritParams probability_basic
 ##' @return numeric probability of observing the given serial interval
 ##' with the given parameters of infectious period and incubation
 ##' period distribution
@@ -15,13 +15,13 @@
 probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
 
   f <- function(s) {
-    dgamma(
+    stats::dgamma(
       s + offset,
       rate = inf_params$rate, shape = inf_params$shape
-    ) * dgamma(
+    ) * stats::dgamma(
       t - s,
       rate = ip_params$rate, shape = ip_params$shape
-    ) / pgamma(
+    ) / stats::pgamma(
       nu + offset,
       rate = inf_params$rate, shape = inf_params$shape
     )
@@ -35,6 +35,7 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
 
 ## Probability of observing a given serial interval taking into
 ## account isolation of primary case.
+##' @title Probability of serial interval
 ##'
 ##' @param nu onset to isolation of primary case
 ##' @inheritParams probability_basic
@@ -47,13 +48,13 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
 probability_isolation <- function(t, nu, inf_params, ip_params) {
 
   f <- function(s) {
-    dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
-      dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape) /
-      pgamma(nu, rate = inf_params$rate, shape = inf_params$shape)
+    stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
+      stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape) /
+      stats::pgamma(nu, rate = inf_params$rate, shape = inf_params$shape)
   }
 
   upper_lim <- min(t, nu)
-  out <- integrate(f, 0, upper_lim)
+  out <- stats::integrate(f, 0, upper_lim)
 
 
   out$value
@@ -65,7 +66,9 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
 ##'
 ##'
 ##'
-##'
+##' @title Probability of serial interval as a convolution of
+##' infectiousness distribution of primary case and incubation period
+##' of secondary case
 ##' @param t observed serial interval
 ##' @param inf_params
 ##' @param ip_params
@@ -82,8 +85,8 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
 probability_basic <- function(t, inf_params, ip_params) {
 
   f <- function(s) {
-    dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
-      dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
+    stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
+      stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
   }
   out <- stats::integrate(f, 0, t)
   out$value
@@ -96,6 +99,31 @@ log_likelihood <- function(t, inf_params, ip_params, fun, ...) {
   log(fun(t, inf_params, ip_params, ...))
 }
 
+##' Total log-likelhood
+##'
+##' This function returns the totoal log-likelihood of the  observed
+##' serial interval. In the absence of isolation, the likelihood is
+##' \deqn{L(rate, shape \mid tvec) = \prod\limits_{i = 1}{n}{ = \int\limits_{0}^{t_{i}}{f(t_1)g(t_{i} - t_1)dt_1} }
+##' where \eqn{t_i} is the ith observation, \eqn{t_1} is the delay between
+##' symptom onset in a primary case to the infection of a secondary case,
+##' and f and g are the infectious and incubation period distributions
+##' respectively.
+##' If isolation is included via non-null \code{nu_vec}, the likelihood
+##' is
+##' \deqn{L(rate, shape \mid tvec) = \prod\limits_{i = 1}{n}{ = \int\limits_{0}^{t_{i}}{(f(t_1) / F(\nu_i))g(t_{i} - t_1)dt_1} }
+##' where \eqn{\nu_i} is the delay from symptom onset in the primary
+##' case to their isolation.
+##' Finally, if asymptomatic infectiosuness is included (non-null \code{offset_vec})
+##' the infectiousness profile is a gamma distribution with offset.
+##' @title Total log likelihood
+##' @param tvec Vector of observed serial intervals
+##' @param nu_vec Vector of delays from onset to isolation
+##' @param offset_vec Vector specifying the pre-symptomatic infectiousness
+##' @inheritParams probability_basic
+##'
+##' @return total log-likelihood
+##' @author Sangeeta Bhatia
+##' @export
 total_log_likelihood <- function(tvec,
                                  nu_vec = NULL,
                                  offset_vec = NULL,
