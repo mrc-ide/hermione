@@ -1,13 +1,27 @@
 Package: hermione
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
+Title: Robust estimation of COVID-19 Serial Interval
+Version: 0.0.1
+Authors@R:
+      c(person(given = "Sangeeta",
+           family = "Bhatia",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "s.bhatia@imperial.ac.uk"),
+      person(given = "Amy",
+           family = "Dighe",
+           role = c("aut"),
+           email = "a.dighe16@imperial.ac.uk"),
+      person(given = "Kylie E C",
+           family = "Ainslie",
+           role = c("aut"),
+           email = "k.ainslie@imperial.ac.uk"))
+Description: This package implements methods to robustly estimate COVID-19 Serial Interval accounting for biases introduced due to isolation of cases.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.5.0)
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 7.1.0
+VignetteBuilder: knitr
