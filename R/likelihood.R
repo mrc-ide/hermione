@@ -101,6 +101,7 @@ log_likelihood <- function(t, inf_params, ip_params, fun, ...) {
 
 ##' Total log-likelhood
 ##'
+##' @details
 ##' This function returns the totoal log-likelihood of the  observed
 ##' serial interval. In the absence of isolation, the likelihood is
 ##' \deqn{L(rate, shape \mid tvec) = \prod\limits_{i = 1}{n}{ = \int\limits_{0}^{t_{i}}{f(t_1)g(t_{i} - t_1)dt_1} }

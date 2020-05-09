@@ -68,7 +68,7 @@ simulate_si <- function(mean_ip,
     out$nu <- stats::rgamma(
       n = nsim, shape = params_iso$shape, rate = 1 / params_iso$scale
     )
-    out$nu <- round(out$nu)
+    out$nu <- round(out$nu, 1)
     ## t_1 i.e. the time at which secondary could have been infected
     ## must be less than nu which is the time from symptom onset to
     ## isolation.
