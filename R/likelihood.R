@@ -163,6 +163,9 @@ total_log_likelihood <- function(tvec,
                                  ip_params) {
 
   if ((!is.null(offset_vec)) & (!is.null(nu_vec))) {
+
+    message("Both offset and isolation are non-null")
+    message("Using probability_isolation_offset")
     ## Use probability_isolation_offset
     out <- mapply(
       FUN = log_likelihood,
@@ -178,6 +181,9 @@ total_log_likelihood <- function(tvec,
     )
   } else if (!is.null(nu_vec) & (is.null(offset_vec))) {
     ## Use probability_isolation
+    message("Isolation is non-null, offset is NULL")
+    message("Using probability_isolation")
+
     out <- mapply(
       FUN = log_likelihood,
       t = tvec,
@@ -191,6 +197,9 @@ total_log_likelihood <- function(tvec,
     )
   } else if (is.null(nu_vec) & (!is.null(offset_vec))) {
     ## Use probability_offset
+    message("Isolation is null, offset is not NULL")
+    message("Using probability_offset")
+
     out <- mapply(
       FUN = log_likelihood,
       t = tvec,
@@ -202,8 +211,11 @@ total_log_likelihood <- function(tvec,
       ),
       SIMPLIFY = TRUE
     )
-  } else {
+  } else if (is.null(nu_vec) & is.null(offset_vec)){
     ## Use probability_basic
+    message("Isolation is null, offset is NULL")
+    message("Using probability_basic")
+
     out <- sapply(
       tvec,
       function(t) log_likelihood(t, inf_params, ip_params, fun = probability_basic)
