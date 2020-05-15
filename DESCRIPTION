@@ -1,6 +1,6 @@
 Package: hermione
 Title: Robust estimation of COVID-19 Serial Interval
-Version: 0.0.2
+Version: 0.0.3
 Authors@R:
       c(person(given = "Sangeeta",
            family = "Bhatia",
