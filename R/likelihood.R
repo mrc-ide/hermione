@@ -161,6 +161,7 @@ total_log_likelihood <- function(tvec,
                                  offset_vec = NULL,
                                  inf_params,
                                  ip_params) {
+
   if ((!is.null(offset_vec)) & (!is.null(nu_vec))) {
     ## Use probability_isolation_offset
     out <- mapply(
@@ -175,7 +176,7 @@ total_log_likelihood <- function(tvec,
       ),
       SIMPLIFY = TRUE
     )
-  } else if (!is.null(nu_vec)) {
+  } else if (!is.null(nu_vec) & (is.null(offset_vec))) {
     ## Use probability_isolation
     out <- mapply(
       FUN = log_likelihood,
@@ -185,6 +186,19 @@ total_log_likelihood <- function(tvec,
         inf_params = inf_params,
         ip_params = ip_params,
         fun = probability_isolation
+      ),
+      SIMPLIFY = TRUE
+    )
+  } else if (is.null(nu_vec) & (!is.null(offset_vec))) {
+    ## Use probability_offset
+    out <- mapply(
+      FUN = log_likelihood,
+      t = tvec,
+      nu = nu_vec,
+      MoreArgs = list(
+        inf_params = inf_params,
+        ip_params = ip_params,
+        fun = probability_offset
       ),
       SIMPLIFY = TRUE
     )
