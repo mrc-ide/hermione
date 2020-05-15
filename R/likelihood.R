@@ -194,7 +194,7 @@ total_log_likelihood <- function(tvec,
     out <- mapply(
       FUN = log_likelihood,
       t = tvec,
-      nu = nu_vec,
+      offset = offset_vec,
       MoreArgs = list(
         inf_params = inf_params,
         ip_params = ip_params,
