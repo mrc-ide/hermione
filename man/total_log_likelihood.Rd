@@ -32,7 +32,20 @@ total log-likelihood
 Total log-likelhood
 }
 \details{
-
+This function returns the totoal log-likelihood of the  observed
+serial interval. In the absence of isolation, the likelihood is
+\deqn{L(rate, shape \mid tvec) = \prod\limits_{i = 1}{n}{ = \int\limits_{0}^{t_{i}}{f(t_1)g(t_{i} - t_1)dt_1} }}
+where \eqn{t_i} is the ith observation, \eqn{t_1} is the delay between
+symptom onset in a primary case to the infection of a secondary case,
+and f and g are the infectious and incubation period distributions
+respectively.
+If isolation is included via non-null \code{nu_vec}, the likelihood
+is
+\deqn{L(rate, shape \mid tvec) = \prod\limits_{i = 1}{n}{ = \int\limits_{0}^{t_{i}}{(f(t_1) / F(\nu_i))g(t_{i} - t_1)dt_1} }}
+where \eqn{\nu_i} is the delay from symptom onset in the primary
+case to their isolation.
+Finally, if asymptomatic infectiosuness is included (non-null \code{offset_vec})
+the infectiousness profile is a gamma distribution with offset.
 }
 \author{
 Sangeeta Bhatia
