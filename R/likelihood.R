@@ -53,16 +53,16 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
     ) * stats::dgamma(
       t - s,
       rate = ip_params$rate, shape = ip_params$shape
-    ) / stats::pgamma(
-      nu + offset,
-      rate = inf_params$rate, shape = inf_params$shape
     )
   }
 
   upper_lim <- min(t, nu)
   out <- stats::integrate(f, -offset, upper_lim)
 
-  out$value
+  denominator <- stats::pgamma(
+    nu + offset, rate = inf_params$rate, shape = inf_params$shape
+  )
+  out$value / denominator
 }
 
 ## Probability of observing a given serial interval taking into
@@ -81,13 +81,14 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
 
   f <- function(s) {
     stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
-      stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape) /
-      stats::pgamma(nu, rate = inf_params$rate, shape = inf_params$shape)
+      stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
   }
 
   upper_lim <- min(t, nu)
   out <- stats::integrate(f, 0, upper_lim)
-
+  denominator <- stats::pgamma(
+    nu, rate = inf_params$rate, shape = inf_params$shape
+  )
 
   out$value
 }

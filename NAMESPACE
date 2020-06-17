@@ -2,6 +2,8 @@
 
 export(fast_probability_basic)
 export(fast_probability_isolation)
+export(fast_probability_isolation_offset)
+export(fast_probability_offset)
 export(probability_basic)
 export(probability_isolation_offset)
 export(probability_offset)
