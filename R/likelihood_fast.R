@@ -89,10 +89,46 @@ fast_probability_offset <- function(t, tmax, offset, inf_params, ip_params) {
 ##' @author Sangeeta Bhatia
 ##' @export
 ##'
-fast_probability_isolation_offset <- function(poffset, nu, offset, inf_params, ip_params) {
+fast_probability_isolation_offset <- function(poffset, nu, offset, inf_params) {
 
   denominator <- stats::pgamma(
     nu + offset, rate = inf_params$rate, shape = inf_params$shape
   )
   poffset / denominator
+}
+
+
+
+##' @title Probability of observing serial interval taking into account
+##' recall bias
+##' @param tobs observed serial interval
+##' @param nu isolation
+##' @param inf_params  parameters of the infectious period
+##' @param ip_params parameters of the incubation period
+##' @param beta recall bias coefficient
+##' @return probability of observing tobs taking into account recall
+##' bias
+##' @author Sangeeta Bhatia
+##' @export
+with_recall_bias <- function(tobs, nu, inf_params, ip_params, beta) {
+
+  f1 <- function(s, tvary) {
+    stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
+      stats::dgamma(
+        tvary - s, rate = ip_params$rate, shape = ip_params$shape
+      )
+  }
+
+  f2 <- function(tvary) {
+    upper_lim <- min(tvary, nu)
+    out <- stats::integrate(f1, lower = 0, upper = upper_lim, t = tvary)
+    stats::dexp(tvary, rate = beta) * out$value
+  }
+
+  denominator <- stats::pgamma(
+    nu, rate = inf_params$rate, shape = inf_params$shape
+  ) ##* stats::pexp(tobs, rate = beta)
+
+  out <- stats::integrate(f2, 0, tobs)
+  out$value / denominator
 }
