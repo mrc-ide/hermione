@@ -60,7 +60,7 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
   out <- stats::integrate(f, -offset, upper_lim)
 
   denominator <- stats::pgamma(
-    nu + offset, rate = inf_params$rate, shape = inf_params$shape
+    nu, rate = inf_params$rate, shape = inf_params$shape
   )
   out$value / denominator
 }
@@ -77,6 +77,7 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
 ##' the parameters of infectious period distributions
 ##' and incubation period distributions.
 ##' @author Sangeeta Bhatia
+##' @export
 probability_isolation <- function(t, nu, inf_params, ip_params) {
 
   f <- function(s) {
