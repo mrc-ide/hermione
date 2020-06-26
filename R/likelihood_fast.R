@@ -26,7 +26,7 @@ fast_probability_basic <- function(t, tmax, inf_params, ip_params) {
     stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
       stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
   }
-  out <- stats::integrate(f, 0, tmax)
+  out <- stats::integrate(f, 0, tmax, stop.on.error = FALSE)
   out$value
 }
 
@@ -69,7 +69,7 @@ fast_probability_offset <- function(t, tmax, offset, inf_params, ip_params) {
     )
   }
 
-  out <- stats::integrate(f, -offset, tmax)
+  out <- stats::integrate(f, -offset, tmax, stop.on.error = FALSE)
 
   out$value
 }

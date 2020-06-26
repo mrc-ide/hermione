@@ -24,7 +24,7 @@ probability_offset <- function(t, offset, inf_params, ip_params) {
     )
   }
 
-  out <- stats::integrate(f, -offset, t)
+  out <- stats::integrate(f, -offset, t, stop.on.error = FALSE)
 
   out$value
 }
@@ -57,7 +57,7 @@ probability_isolation_offset <- function(t, nu, offset, inf_params, ip_params) {
   }
 
   upper_lim <- min(t, nu)
-  out <- stats::integrate(f, -offset, upper_lim)
+  out <- stats::integrate(f, -offset, upper_lim, stop.on.error = FALSE)
 
   denominator <- stats::pgamma(
     nu, rate = inf_params$rate, shape = inf_params$shape
@@ -86,7 +86,7 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
   }
 
   upper_lim <- min(t, nu)
-  out <- stats::integrate(f, 0, upper_lim)
+  out <- stats::integrate(f, 0, upper_lim, stop.on.error = FALSE)
   denominator <- stats::pgamma(
     nu, rate = inf_params$rate, shape = inf_params$shape
   )
@@ -121,7 +121,7 @@ probability_basic <- function(t, inf_params, ip_params) {
     stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
       stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
   }
-  out <- stats::integrate(f, 0, t)
+  out <- stats::integrate(f, 0, t, stop.on.error = FALSE)
   out$value
 }
 
