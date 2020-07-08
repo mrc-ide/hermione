@@ -5,7 +5,7 @@
 \title{Probability of serial interval when primary case has been
 isolated and in the presence of asymptomatic infectiousness}
 \usage{
-fast_probability_isolation_offset(poffset, nu, offset, inf_params, ip_params)
+fast_probability_isolation_offset(poffset, nu, offset, inf_params)
 }
 \arguments{
 \item{poffset}{Probability calculation with offset only}
@@ -16,9 +16,6 @@ fast_probability_isolation_offset(poffset, nu, offset, inf_params, ip_params)
 
 \item{inf_params}{list with components rate and shape for
 infectious period distribution}
-
-\item{ip_params}{list with components rate and shape for
-incubation period distribution}
 }
 \value{
 numeric probability of observing the given serial interval
