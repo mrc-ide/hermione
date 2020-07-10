@@ -15,11 +15,8 @@ prmary case has been isolated}
 
 \item{offset}{days of asymptomatic infectiousness}
 
-\item{inf_params}{list with components rate and shape for
-infectious period distribution}
-
-\item{ip_params}{list with components rate and shape for
-incubation period distribution}
+\item{inf_params}{named list of arguments for
+infectious period distribution.}
 }
 \value{
 numeric probability of observing the given serial interval

@@ -19,11 +19,8 @@ total_log_likelihood(
 
 \item{offset_vec}{Vector specifying the pre-symptomatic infectiousness}
 
-\item{inf_params}{list with components rate and shape for
-infectious period distribution}
-
-\item{ip_params}{list with components rate and shape for
-incubation period distribution}
+\item{inf_params}{named list of arguments for
+infectious period distribution.}
 }
 \value{
 total log-likelihood

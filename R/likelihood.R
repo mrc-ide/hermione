@@ -95,8 +95,11 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
 }
 
 
-## Probability of observing a serial interval t is the convolution of
-## the distributions of infectious profile and incubation period
+##' Probability of serial interval
+##'
+##' @details
+##' Probability of observing a serial interval t is the convolution of
+##' the distributions of infectious profile and incubation period.
 ##'
 ##'
 ##'
@@ -105,21 +108,40 @@ probability_isolation <- function(t, nu, inf_params, ip_params) {
 ##' of secondary case
 ##' @param t observed serial interval
 ##'
-##' @param inf_params list with components rate and shape for
-##' infectious period distribution
-##' @param ip_params list with components rate and shape for
-##' incubation period distribution
+##' @param inf_distr quoted name of the infectious period
+##' density function. Defaults to dgamma
+##' @param inc_distr quoted name of the incubation period
+##' density function. Defaults to dgamma
+##' @param inf_params named list of arguments for
+##' infectious period distribution.
+##' @param inc_params named list of arguments for
+##' incubation period distribution.
+##'
+##'
 ##' @return numeric. Probability of observing the given serial
 ##' interval given
 ##' the parameters of infectious period distributions
 ##' and incubation period distributions
 ##' @author Sangeeta Bhatia
 ##' @export
-probability_basic <- function(t, inf_params, ip_params) {
+##' @examples
+##' probability_basic(
+##'   10,
+##'   inf_params = list(shape = 100, rate = 100),
+##'   inc_params = list(shape = 50, rate = 100)
+##' )
+probability_basic <- function(t,
+                              inf_distr = "dgamma",
+                              inc_distr = "dgamma",
+                              inf_params,
+                              inc_params) {
 
+  f1 <- match.fun(inf_distr)
+  f2 <- match.fun(inc_distr)
   f <- function(s) {
-    stats::dgamma(s, rate = inf_params$rate, shape = inf_params$shape) *
-      stats::dgamma(t - s, rate = ip_params$rate, shape = ip_params$shape)
+    inf_params$x <- s
+    inc_params$x <- t - s
+    do.call(f1, inf_params) * do.call(f2, inc_params)
   }
   out <- stats::integrate(f, 0, t, stop.on.error = FALSE)
   out$value

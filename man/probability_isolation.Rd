@@ -11,11 +11,8 @@ probability_isolation(t, nu, inf_params, ip_params)
 
 \item{nu}{onset to isolation of primary case}
 
-\item{inf_params}{list with components rate and shape for
-infectious period distribution}
-
-\item{ip_params}{list with components rate and shape for
-incubation period distribution}
+\item{inf_params}{named list of arguments for
+infectious period distribution.}
 }
 \value{
 numeric. Probability of observing the given serial

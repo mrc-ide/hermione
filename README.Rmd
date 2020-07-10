@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 <img src='man/figures/hermione_logo.png' align="right" height="138.5" />
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/mrc-ide/hermione.svg?branch=master)](https://travis-ci.org/mrc-ide/hermione)
+[![Codecov test coverage](https://codecov.io/gh/mrc-ide/hermione/branch/master/graph/badge.svg)](https://codecov.io/gh/mrc-ide/hermione?branch=master)
 <!-- badges: end -->
 
 The goal of hermione is to do robust estimation of serial interval in the presence of biases in data.

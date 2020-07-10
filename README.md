@@ -7,6 +7,10 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/mrc-ide/hermione.svg?branch=master)](https://travis-ci.org/mrc-ide/hermione)
+[![Codecov test
+coverage](https://codecov.io/gh/mrc-ide/hermione/branch/master/graph/badge.svg)](https://codecov.io/gh/mrc-ide/hermione?branch=master)
 <!-- badges: end -->
 
 The goal of hermione is to do robust estimation of serial interval in
