@@ -1,10 +1,11 @@
 ## Probability of observing a given serial interval taking into
 ## account asymptomatic infectiousness.
 ##' @title Probability of serial interval
-##' in the presence of asymptomatic infectiousness
+##' with asymptomatic infectiousness
 ##' @param t observed serial interval
 ##'
 ##' @param offset days of asymptomatic infectiousness
+##'
 ##' @inheritParams probability_basic
 ##' @return numeric probability of observing the given serial interval
 ##' with the given parameters of infectious period and incubation
@@ -12,16 +13,19 @@
 ##' @author Sangeeta Bhatia
 ##' @export
 ##'
-probability_offset <- function(t, offset, inf_params, ip_params) {
+probability_offset <- function(t,
+                               offset,
+                               inf_distr = "dgamma",
+                               inc_distr = "dgamma",
+                               inf_params,
+                               inc_params) {
 
+  f1 <- match.fun(inf_distr)
+  f2 <- match.fun(inc_distr)
   f <- function(s) {
-    stats::dgamma(
-      s + offset,
-      rate = inf_params$rate, shape = inf_params$shape
-    ) * stats::dgamma(
-      t - s,
-      rate = ip_params$rate, shape = ip_params$shape
-    )
+    inf_params$x <- s + offset
+    inc_params$x <- t - s
+    do.call(f1, inf_params) * do.call(f2, inc_params)
   }
 
   out <- stats::integrate(f, -offset, t, stop.on.error = FALSE)
