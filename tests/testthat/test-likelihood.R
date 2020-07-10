@@ -15,4 +15,14 @@ test_that("probability as convolution of infectious period and incubation period
 
   log_p1 <- round(log(p), 4)
   expect_equal(log_p1, right)
+
+  ## convolution of epxonential distributions is gamma
+  p <- probability_basic(
+    10, "dexp", "dexp", list(rate = 5), list(rate = 5)
+  )
+  right <- dgamma(10, 2, 5)
+  right <- round(log(p), 4)
+  log_p1 <- round(log(p), 4)
+  expect_equal(log_p1, right)
+
 })
