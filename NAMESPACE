@@ -2,10 +2,12 @@
 
 export(beta_muvat2shape1shape2)
 export(beta_shape1shape22muvar)
+export(dmbeta)
 export(fast_probability_basic)
 export(fast_probability_isolation)
 export(fast_probability_isolation_offset)
 export(fast_probability_offset)
+export(pmbeta)
 export(probability_basic)
 export(probability_isolation)
 export(probability_isolation_offset)

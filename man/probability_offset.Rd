@@ -3,17 +3,33 @@
 \name{probability_offset}
 \alias{probability_offset}
 \title{Probability of serial interval
-in the presence of asymptomatic infectiousness}
+with asymptomatic infectiousness}
 \usage{
-probability_offset(t, offset, inf_params, ip_params)
+probability_offset(
+  t,
+  offset,
+  inf_distr = "dgamma",
+  inc_distr = "dgamma",
+  inf_params,
+  inc_params
+)
 }
 \arguments{
 \item{t}{observed serial interval}
 
 \item{offset}{days of asymptomatic infectiousness}
 
+\item{inf_distr}{quoted name of the infectious period
+density function. Defaults to dgamma}
+
+\item{inc_distr}{quoted name of the incubation period
+density function. Defaults to dgamma}
+
 \item{inf_params}{named list of arguments for
 infectious period distribution.}
+
+\item{inc_params}{named list of arguments for
+incubation period distribution.}
 }
 \value{
 numeric probability of observing the given serial interval
@@ -22,7 +38,7 @@ period distribution
 }
 \description{
 Probability of serial interval
-in the presence of asymptomatic infectiousness
+with asymptomatic infectiousness
 }
 \author{
 Sangeeta Bhatia

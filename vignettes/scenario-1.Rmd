@@ -1,0 +1,19 @@
+---
+title: "Serial Interval Estimation Accounting for Isolation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Serial Interval Estimation Accounting for Isolation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(hermione)
+```
