@@ -7,7 +7,7 @@
 ##' @return A named list containing 'shape1' and 'shape2'
 ##' @author Sangeeta Bhatia
 ##' @export
-beta_muvat2shape1shape2 <- function(mu, sigma2) {
+beta_muvar2shape1shape2 <- function(mu, sigma2) {
 
   shape1 <- (mu^2 * (1 - mu) / sigma2) - mu
   shape2 <- shape1 * (1 - mu) / mu
