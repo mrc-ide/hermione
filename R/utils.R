@@ -58,6 +58,6 @@ dmbeta <- function(x, shape1, shape2, xmax, ncp = 0, log = FALSE) {
 ##' @export
 pmbeta <- function(q, shape1, shape2, xmax, ncp = 0, log = FALSE) {
 
-  pbeta(q = x/xmax, shape1 = shape1, shape2 = shape2, log = log)
+  pbeta(q = q/xmax, shape1 = shape1, shape2 = shape2, log = log)
 
 }
