@@ -58,7 +58,7 @@ simulate_si <- function(mean_ip,
     n = nsim, shape = params_ip$shape, rate = 1 / params_ip$scale
   )
 
-  out <- data.frame(t_1 = t_1, t_2 = t_2, si = round(t_1 + t_2))
+  out <- data.frame(t_1 = t_1, t_2 = t_2, si = t_1 + t_2)
 
   if (!is.null(mean_iso)) {
 
